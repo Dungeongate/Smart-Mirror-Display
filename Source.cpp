@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include "SDL.h"
@@ -64,4 +65,5 @@ int main(int, char**){
 	SDL_DestroyWindow(main_window);
 	SDL_Quit();
 	return 0;
+
 }
