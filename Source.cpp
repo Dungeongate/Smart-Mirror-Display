@@ -1,10 +1,11 @@
+
 #include <iostream>
 #include <string>
-#include <SDL.h>
+#include "SDL.h"
 
 
 int main(int, char**){
-	// Initialize video only for now
+	// Initialize video only for new
 	if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 		return 1;
@@ -64,4 +65,5 @@ int main(int, char**){
 	SDL_DestroyWindow(main_window);
 	SDL_Quit();
 	return 0;
+
 }
