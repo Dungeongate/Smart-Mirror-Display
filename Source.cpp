@@ -1,22 +1,23 @@
-
 #include <iostream>
 #include <string>
-#include "SDL.h"
+#include <SDL.h>
+#include "Widget.h"
+#include "Basic_Image.h"
 
 
 int main(int, char**){
-	// Initialize video only for new
+	// Initialize video only for now
 	if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
 
 	// Create main window
-	SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 1600, 900, SDL_WINDOW_SHOWN);
+	SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 0, 0, 1920, 1080, SDL_WINDOW_SHOWN);
 	if (main_window == nullptr){
 		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
-		return 1;
+		return 2;
 	}
 
 	// Create renderer to draw to main window
@@ -26,44 +27,40 @@ int main(int, char**){
 		SDL_DestroyWindow(main_window);
 		std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
-		return 1;
+		return 3;
 	}
 
-	// Load the bmp
-	std::string imagePath = "test_img.bmp";
-	SDL_Surface *test_image = SDL_LoadBMP(imagePath.c_str());
-	if (test_image == nullptr){
-		SDL_DestroyRenderer(main_renderer);
-		SDL_DestroyWindow(main_window);
-		std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return 1;
-	}
+	//Create keyboard state
+	const Uint8 *key_state = SDL_GetKeyboardState(NULL);
 
-	// Create texture from test image bmp
-	SDL_Texture *test_texture = SDL_CreateTextureFromSurface(main_renderer, test_image);
-	SDL_FreeSurface(test_image);
-	if (test_texture == nullptr){
-		SDL_DestroyRenderer(main_renderer);
-		SDL_DestroyWindow(main_window);
-		std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return 1;
-	}
+	SDL_Event E;
 
-	// Draw test bmp texture
-	for (int i = 0; i < 3; ++i){
-		SDL_RenderClear(main_renderer);
-		SDL_RenderCopy(main_renderer, test_texture, NULL, NULL);
-		SDL_RenderPresent(main_renderer);
-		// Wait 6 seconds
-		SDL_Delay(2000);
-	}
+	Basic_Image text_test(0, 0, main_renderer, main_window, "text.bmp");
+	Basic_Image clock_image(200, 100, main_renderer, main_window, "clock_test.bmp");
 
-	SDL_DestroyTexture(test_texture);
+	// Main Loop
+	while (!key_state[SDL_SCANCODE_ESCAPE]){
+		// Update event states
+		SDL_PumpEvents();
+		SDL_PollEvent(&E);
+		text_test.draw();
+		clock_image.draw();
+
+
+		if (key_state[SDL_SCANCODE_RIGHT])
+			clock_image.setX(clock_image.getX() + 15);
+		if (key_state[SDL_SCANCODE_LEFT])
+			clock_image.setX(clock_image.getX() - 15);
+		if (key_state[SDL_SCANCODE_UP])
+			clock_image.setY(clock_image.getY() - 15);
+		if (key_state[SDL_SCANCODE_DOWN])
+			clock_image.setY(clock_image.getY() + 15);
+
+
+		clock_image.handle_events(E);
+	}
 	SDL_DestroyRenderer(main_renderer);
 	SDL_DestroyWindow(main_window);
 	SDL_Quit();
 	return 0;
-
 }
