@@ -13,7 +13,7 @@ int main(int, char**){
 	}
 
 	// Create main window
-	SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN);
+	SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
 	if (main_window == nullptr){
 		std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
 		SDL_Quit();
@@ -53,7 +53,7 @@ int main(int, char**){
 			clock_image.setY(clock_image.getY() - 15);
 		if (key_state[SDL_SCANCODE_DOWN])
 			clock_image.setY(clock_image.getY() + 15);
-		
+
 	}
 	SDL_DestroyRenderer(main_renderer);
 	SDL_DestroyWindow(main_window);
