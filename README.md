@@ -4,7 +4,7 @@
 # 
 #
 # This software is intended to work with the operating system Rasbian on the Raspberry Pi Computer 2|3
-# The primary function of this software is to generate a universal customizable user interface involved with the DIY project commonly known as the "Raspberry Pi Smart Mirror Display
+# The primary function of this software is to generate a customizable user interface involved with the DIY project commonly known as the "Raspberry Pi Smart Mirror Display
 # Our software is intended to be modular to allow for maximum amount of flexibility by the user
 # Later versions of our software will require a wifi/bluetooth connection so a Raspberry Pi 3 is recommended
 #
