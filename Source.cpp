@@ -67,7 +67,6 @@ int main(int, char**) {
             clock_image.setY(clock_image.getY() + 15);
         
         
-        clock_image.handle_events(E);
     }
     SDL_DestroyRenderer(main_renderer);
     SDL_DestroyWindow(main_window);
