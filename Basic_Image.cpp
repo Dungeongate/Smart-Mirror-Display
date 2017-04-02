@@ -1,6 +1,7 @@
 #include "Basic_Image.h"
 #include <string>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
 
 // Standard Constructor
@@ -9,7 +10,7 @@ Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_W
 	image_location = file_source;
 
 	// Load the image to use
-	SDL_Surface *image_surface = SDL_LoadBMP(image_location.c_str());
+	SDL_Surface *image_surface = IMG_Load(image_location.c_str());
 
 	//Make sure the load succeeded
 	if (image_surface == nullptr){
@@ -42,10 +43,8 @@ Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_W
 // Draws the image widget
 void Basic_Image::draw()
 {
-
 	// Draw test bmp texture
 	SDL_RenderCopy(renderer, texture, NULL, &pos);
-	SDL_RenderPresent(renderer);
 }
 
 // Destructor

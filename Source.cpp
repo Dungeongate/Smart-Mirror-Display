@@ -3,6 +3,7 @@
 #include "sqlite3.h"
 #include "TextDatabase.h"
 #include <SDL.h>
+#include <SDL_image.h>
 //#include <SDL2/SDL.h>
 #include "Widget.h"
 #include "Basic_Image.h"
@@ -45,31 +46,52 @@ int main(int, char**) {
     
     SDL_Event E;
     
-    Basic_Image text_test(0, 0, main_renderer, main_window, "text.bmp");
-    Basic_Image clock_image(200, 100, main_renderer, main_window, "clock_test.bmp");
-    
+    Basic_Image clock_image(200, 100, main_renderer, main_window, "clock_test.png");
+	Basic_Image test_image(0, 0, main_renderer, main_window, "test.png");
+	Basic_Image test_image2(0, 100, main_renderer, main_window, "test.png");
+
+	clock_image.draw();
+	test_image.draw();
+
+	bool end_main_loop = false;
     // Main Loop
-    while (!key_state[SDL_SCANCODE_ESCAPE]){
-        // Update event states
-        SDL_PumpEvents();
-        SDL_PollEvent(&E);
-        text_test.draw();
-        clock_image.draw();
-        
-        
-        if (key_state[SDL_SCANCODE_RIGHT])
-            clock_image.setX(clock_image.getX() + 15);
-        if (key_state[SDL_SCANCODE_LEFT])
-            clock_image.setX(clock_image.getX() - 15);
-        if (key_state[SDL_SCANCODE_UP])
-            clock_image.setY(clock_image.getY() - 15);
-        if (key_state[SDL_SCANCODE_DOWN])
-            clock_image.setY(clock_image.getY() + 15);
-        
-        
-    }
-    SDL_DestroyRenderer(main_renderer);
-    SDL_DestroyWindow(main_window);
-    SDL_Quit();
+	while (!end_main_loop){
+		// Event handling
+		while (SDL_PollEvent(&E) != 0){
+			switch (E.type){
+			case SDL_KEYDOWN:
+				switch (E.key.keysym.sym){
+				case SDLK_ESCAPE:
+					end_main_loop = true;
+					break;
+				case SDLK_LEFT:
+					clock_image.setX(clock_image.getX() - 15);
+					break;
+				case SDLK_RIGHT:
+					clock_image.setX(clock_image.getX() + 15);
+					break;
+				case SDLK_UP:
+					clock_image.setY(clock_image.getY() - 15);
+					break;
+				case SDLK_DOWN:
+					clock_image.setY(clock_image.getY() + 15);
+					break;
+				}
+				break;
+			case SDL_QUIT:
+				end_main_loop = true;
+				break;
+			}
+		}
+		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
+		SDL_RenderClear(main_renderer);
+
+		test_image.draw();
+		test_image2.draw();
+		clock_image.draw();
+
+		//update screen
+		SDL_RenderPresent(main_renderer);
+	}
     return 0;
 }
