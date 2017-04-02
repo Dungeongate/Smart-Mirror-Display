@@ -59,22 +59,47 @@ int main(int, char**) {
 		// Event handling
 		while (SDL_PollEvent(&E) != 0){
 			switch (E.type){
+			// User presses a key
 			case SDL_KEYDOWN:
 				switch (E.key.keysym.sym){
+				// Escape key pressed
 				case SDLK_ESCAPE:
 					end_main_loop = true;
 					break;
+				// Left key pressed
 				case SDLK_LEFT:
+					test_image.setX(test_image.getX() - 15);
+					test_image2.setX(test_image2.getX() - 15);
 					clock_image.setX(clock_image.getX() - 15);
 					break;
+				// Right key pressed
 				case SDLK_RIGHT:
+					test_image.setX(test_image.getX() + 15);
+					test_image2.setX(test_image2.getX() + 15);
 					clock_image.setX(clock_image.getX() + 15);
 					break;
+				// Up key pressed
 				case SDLK_UP:
+					test_image.setY(test_image.getY() - 15);
+					test_image2.setY(test_image2.getY() - 15);
 					clock_image.setY(clock_image.getY() - 15);
 					break;
+				// Down key pressed
 				case SDLK_DOWN:
+					test_image.setY(test_image.getY() + 15);
+					test_image2.setY(test_image2.getY() + 15);
 					clock_image.setY(clock_image.getY() + 15);
+					break;
+				}
+				break;
+			// Mouse button pressed
+			case SDL_MOUSEBUTTONDOWN:
+				switch (E.button.button){
+				// Left mouse pressed
+				case SDL_BUTTON_LEFT:
+					test_image.toggleLock(E.motion.x, E.motion.y);
+					test_image2.toggleLock(E.motion.x, E.motion.y);
+					clock_image.toggleLock(E.motion.x,E.motion.y);
 					break;
 				}
 				break;
