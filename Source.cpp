@@ -62,6 +62,8 @@ int main(int, char**) {
 	SDL_Color text_color = { 255, 255, 255 };
 	Text test_text(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,"hello world!", 50);
 
+	int count = 0;
+
 	bool end_main_loop = false;
     // Main Loop
 	while (!end_main_loop){
@@ -102,6 +104,13 @@ int main(int, char**) {
 					test_image2.setY(test_image2.getY() + 15);
 					clock_image.setY(clock_image.getY() + 15);
 					test_text.setY(test_text.getY() + 15);
+					break;
+				case SDLK_CAPSLOCK:
+					count++;
+					test_text.changeText(std::to_string(count));
+					break;
+				case SDLK_SPACE:
+					test_image.changeImage("clock_test.png");
 					break;
 				}
 				break;
