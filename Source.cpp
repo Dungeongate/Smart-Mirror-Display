@@ -4,9 +4,11 @@
 #include "TextDatabase.h"
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 //#include <SDL2/SDL.h>
 #include "Widget.h"
 #include "Basic_Image.h"
+#include "Text.h"
 //Xcode version of #include <SDL.h> is #include <SDL2/SDL.h>
 
 
@@ -22,6 +24,13 @@ int main(int, char**) {
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
     }
+
+	//Initialize SDL_ttf
+	if (TTF_Init() == -1)
+	{
+		std::cout << "SDL_ttf Error:" << TTF_GetError() << std::endl;
+		return 4;
+	}
     
     // Create main window
     SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
@@ -50,8 +59,8 @@ int main(int, char**) {
 	Basic_Image test_image(0, 0, main_renderer, main_window, "test.png");
 	Basic_Image test_image2(0, 100, main_renderer, main_window, "test.png");
 
-	clock_image.draw();
-	test_image.draw();
+	SDL_Color text_color = { 255, 255, 255 };
+	Text test_text(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,"hello world!", 50);
 
 	bool end_main_loop = false;
     // Main Loop
@@ -71,24 +80,28 @@ int main(int, char**) {
 					test_image.setX(test_image.getX() - 15);
 					test_image2.setX(test_image2.getX() - 15);
 					clock_image.setX(clock_image.getX() - 15);
+					test_text.setX(test_text.getX() - 15);
 					break;
 				// Right key pressed
 				case SDLK_RIGHT:
 					test_image.setX(test_image.getX() + 15);
 					test_image2.setX(test_image2.getX() + 15);
 					clock_image.setX(clock_image.getX() + 15);
+					test_text.setX(test_text.getX() + 15);
 					break;
 				// Up key pressed
 				case SDLK_UP:
 					test_image.setY(test_image.getY() - 15);
 					test_image2.setY(test_image2.getY() - 15);
 					clock_image.setY(clock_image.getY() - 15);
+					test_text.setY(test_text.getY() - 15);
 					break;
 				// Down key pressed
 				case SDLK_DOWN:
 					test_image.setY(test_image.getY() + 15);
 					test_image2.setY(test_image2.getY() + 15);
 					clock_image.setY(clock_image.getY() + 15);
+					test_text.setY(test_text.getY() + 15);
 					break;
 				}
 				break;
@@ -100,6 +113,7 @@ int main(int, char**) {
 					test_image.toggleLock(E.motion.x, E.motion.y);
 					test_image2.toggleLock(E.motion.x, E.motion.y);
 					clock_image.toggleLock(E.motion.x,E.motion.y);
+					test_text.toggleLock(E.motion.x, E.motion.y);
 					break;
 				}
 				break;
@@ -114,6 +128,7 @@ int main(int, char**) {
 		test_image.draw();
 		test_image2.draw();
 		clock_image.draw();
+		test_text.draw();
 
 		//update screen
 		SDL_RenderPresent(main_renderer);
