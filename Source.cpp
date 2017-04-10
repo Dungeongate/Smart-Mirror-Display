@@ -15,13 +15,13 @@ int main(int, char**) {
     char *input="test.db";
     textdatabase databaseinfo(input);
     databaseinfo.getQuote();
-    
+
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
     }
-    
+
     // Create main window
     SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
     if (main_window == nullptr){
@@ -29,7 +29,7 @@ int main(int, char**) {
         SDL_Quit();
         return 2;
     }
-    
+
     // Create renderer to draw to main window
     // Second parameter indicates index of redering driver to be used, -1 selects the first usable driver
     SDL_Renderer *main_renderer = SDL_CreateRenderer(main_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -39,15 +39,18 @@ int main(int, char**) {
         SDL_Quit();
         return 3;
     }
-    
+
     //Create keyboard state
     const Uint8 *key_state = SDL_GetKeyboardState(NULL);
-    
+
     SDL_Event E;
-    
+
     Basic_Image text_test(0, 0, main_renderer, main_window, "text.bmp");
     Basic_Image clock_image(200, 100, main_renderer, main_window, "clock_test.bmp");
-    
+
+    // Setup weather-util
+    system("Weather/Weather_Setup.sh"); //Permission should be chmod +x
+
     // Main Loop
     while (!key_state[SDL_SCANCODE_ESCAPE]){
         // Update event states
@@ -55,8 +58,8 @@ int main(int, char**) {
         SDL_PollEvent(&E);
         text_test.draw();
         clock_image.draw();
-        
-        
+
+
         if (key_state[SDL_SCANCODE_RIGHT])
             clock_image.setX(clock_image.getX() + 15);
         if (key_state[SDL_SCANCODE_LEFT])
@@ -65,8 +68,10 @@ int main(int, char**) {
             clock_image.setY(clock_image.getY() - 15);
         if (key_state[SDL_SCANCODE_DOWN])
             clock_image.setY(clock_image.getY() + 15);
-        
-        
+
+        // Update weather
+        system("Get_Weather.sh"); //Permission should be chmod +x
+
     }
     SDL_DestroyRenderer(main_renderer);
     SDL_DestroyWindow(main_window);
