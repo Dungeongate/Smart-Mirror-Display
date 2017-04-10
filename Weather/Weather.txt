@@ -1,3 +1,2 @@
-Lubbock, TX
-Hi: 69
-Lo: -69
+KLBB
+Temperature: 69
