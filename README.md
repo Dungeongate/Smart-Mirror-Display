@@ -9,7 +9,7 @@
 # Later versions of our software will require a wifi/bluetooth connection so a Raspberry Pi 3 is recommended
 #
 #
-# Parts needed to assemble full project: Raspberry Pi, Mirror with two way capability, Monitor that is the same size as 2-way mirror or vice versa, wooden frame capable of housing Raspberry Pi with adequate ventilation and also holding the mirror and monitor in their appropriate spot.
+# Parts needed to assemble full project: Raspberry Pi, Mirror with one-way capability, Monitor that is the same size as 2-way mirror or vice versa, wooden frame capable of housing Raspberry Pi with adequate ventilation and also holding the mirror and monitor in their appropriate spot.
 #
 #
 # This software is free to the public
