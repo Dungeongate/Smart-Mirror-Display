@@ -47,6 +47,8 @@ int main(int, char**) {
 
     Basic_Image text_test(0, 0, main_renderer, main_window, "text.bmp");
     Basic_Image clock_image(200, 100, main_renderer, main_window, "clock_test.bmp");
+    Basic_Image weather_image(100, 200, main_renderer, main_window,
+        "weather_test.bmp");
 
     // Setup weather-util
     system("Weather/Weather_Setup.sh"); //Permission should be chmod +x
@@ -58,7 +60,7 @@ int main(int, char**) {
         SDL_PollEvent(&E);
         text_test.draw();
         clock_image.draw();
-
+        weather_image.draw();
 
         if (key_state[SDL_SCANCODE_RIGHT])
             clock_image.setX(clock_image.getX() + 15);
