@@ -61,7 +61,6 @@ int main(int, char**) {
 	Basic_Image test_image2(0, 100, main_renderer, main_window, "test.png");
 
 	SDL_Color text_color = { 255, 255, 255 };
-	Text test_text(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,"hello world!", 50);
     Text StringQuote(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 100);
 
 	int count = 0;
@@ -84,32 +83,32 @@ int main(int, char**) {
 					test_image.setX(test_image.getX() - 15);
 					test_image2.setX(test_image2.getX() - 15);
 					clock_image.setX(clock_image.getX() - 15);
-					test_text.setX(test_text.getX() - 15);
+					StringQuote.setX(StringQuote.getX() - 15);
 					break;
 				// Right key pressed
 				case SDLK_RIGHT:
 					test_image.setX(test_image.getX() + 15);
 					test_image2.setX(test_image2.getX() + 15);
 					clock_image.setX(clock_image.getX() + 15);
-					test_text.setX(test_text.getX() + 15);
+					StringQuote.setX(StringQuote.getX() + 15);
 					break;
 				// Up key pressed
 				case SDLK_UP:
 					test_image.setY(test_image.getY() - 15);
 					test_image2.setY(test_image2.getY() - 15);
 					clock_image.setY(clock_image.getY() - 15);
-					test_text.setY(test_text.getY() - 15);
+					StringQuote.setY(StringQuote.getY() - 15);
 					break;
 				// Down key pressed
 				case SDLK_DOWN:
 					test_image.setY(test_image.getY() + 15);
 					test_image2.setY(test_image2.getY() + 15);
 					clock_image.setY(clock_image.getY() + 15);
-					test_text.setY(test_text.getY() + 15);
+					StringQuote.setY(StringQuote.getY() + 15);
 					break;
 				case SDLK_CAPSLOCK:
 					count++;
-					test_text.changeText(std::to_string(count));
+					StringQuote.changeText(std::to_string(count));
 					break;
 				case SDLK_SPACE:
 					test_image.changeImage("clock_test.png");
@@ -124,7 +123,7 @@ int main(int, char**) {
 					test_image.toggleLock(E.motion.x, E.motion.y);
 					test_image2.toggleLock(E.motion.x, E.motion.y);
 					clock_image.toggleLock(E.motion.x,E.motion.y);
-					test_text.toggleLock(E.motion.x, E.motion.y);
+					StringQuote.toggleLock(E.motion.x, E.motion.y);
 					break;
 				}
 				break;
@@ -139,7 +138,6 @@ int main(int, char**) {
 		test_image.draw();
 		test_image2.draw();
 		clock_image.draw();
-		test_text.draw();
         StringQuote.draw();
 
 		//update screen
