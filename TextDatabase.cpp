@@ -15,7 +15,7 @@
 
 
 textdatabase::textdatabase(const char *database){
-    if (!(sqlite3_open(database, &db))) {
+    if ((sqlite3_open(database, &db))) {
         /*Print Statement for Console Debugging*/
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return;

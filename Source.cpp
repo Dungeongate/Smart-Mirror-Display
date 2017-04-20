@@ -18,20 +18,19 @@ int main(int, char**) {
     char *input="test.db";
     textdatabase databaseinfo(input);
     databaseinfo.getQuote();
-    
+
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
     }
-
 	//Initialize SDL_ttf
 	if (TTF_Init() == -1)
 	{
 		std::cout << "SDL_ttf Error:" << TTF_GetError() << std::endl;
 		return 4;
 	}
-    
+
     // Create main window
     SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
     if (main_window == nullptr){
@@ -39,7 +38,7 @@ int main(int, char**) {
         SDL_Quit();
         return 2;
     }
-    
+
     // Create renderer to draw to main window
     // Second parameter indicates index of redering driver to be used, -1 selects the first usable driver
     SDL_Renderer *main_renderer = SDL_CreateRenderer(main_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -49,10 +48,10 @@ int main(int, char**) {
         SDL_Quit();
         return 3;
     }
-    
+
     //Create keyboard state
     const Uint8 *key_state = SDL_GetKeyboardState(NULL);
-    
+
     SDL_Event E;
     
     Basic_Image clock_image(200, 100, main_renderer, main_window, "clock_test.png");
@@ -142,5 +141,6 @@ int main(int, char**) {
 		//update screen
 		SDL_RenderPresent(main_renderer);
 	}
+
     return 0;
 }
