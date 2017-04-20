@@ -10,9 +10,11 @@ public:
 	void setY(int);
 	int getX();
 	int getY();
+	void toggleLock(int,int);
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
 	SDL_Rect pos;
+	bool locked;
 };
 
