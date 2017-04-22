@@ -10,11 +10,6 @@
 #include <string>
 #include "sqlite3.h"
 #include "TextDatabase.h"
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include "Widget.h"
-#include "Basic_Image.h"
 
 std::string answer;
 //Constructor initiates the connection to the database and assigns a pointer to the database file location

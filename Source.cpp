@@ -1,15 +1,13 @@
 #include <iostream>
 #include <string>
-#include "sqlite3.h"
-#include "TextDatabase.h"
-//#include <SDL.h>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
 #include <SDL2_ttf/SDL_ttf.h>
+#include "sqlite3.h"
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
-//Xcode version of #include <SDL.h> is #include <SDL2/SDL.h>
+#include "TextDatabase.h"
 
 
 

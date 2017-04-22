@@ -1,8 +1,6 @@
 #include "Widget.h"
 #include <string>
 #include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
 
 // Standard Constructor for Widget
 Widget::Widget(int start_x, int start_y, SDL_Renderer* renderer, SDL_Window* window)

@@ -3,7 +3,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
 
 // Standard Constructor
 Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string file_source) : Widget(start_x, start_y, renderer, window)
