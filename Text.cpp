@@ -1,9 +1,8 @@
 #include "Text.h"
+#include <SDL.h>
 #include <string>
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string font_name, SDL_Color color, std::string text_val, int pt_size) : Widget(start_x, start_y, renderer, window)
 {
@@ -52,8 +51,14 @@ Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window,
 // Draws the image widget
 void Text::draw()
 {
-	// Draw test text texture
-	SDL_RenderCopy(renderer, texture, NULL, &pos);
+	if (!hidden){
+		// Draw test text texture
+		SDL_RenderCopy(renderer, texture, NULL, &pos);
+		if (!locked){
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_RenderDrawRect(renderer, &pos);
+		}
+	}
 }
 
 // Changes the text string to be displayed

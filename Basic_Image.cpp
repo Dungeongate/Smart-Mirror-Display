@@ -1,8 +1,8 @@
 #include "Basic_Image.h"
 #include <string>
+#include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
 
 // Standard Constructor
 Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string file_source) : Widget(start_x, start_y, renderer, window)
@@ -43,8 +43,14 @@ Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_W
 // Draws the image widget
 void Basic_Image::draw()
 {
-	// Draw test bmp texture
-	SDL_RenderCopy(renderer, texture, NULL, &pos);
+	if (!hidden){
+		// Draw test bmp texture
+		SDL_RenderCopy(renderer, texture, NULL, &pos);
+		if (!locked){
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_RenderDrawRect(renderer, &pos);
+		}
+	}
 }
 
 // Changes the image to be drawn
