@@ -1,24 +1,20 @@
 #include <iostream>
 #include <string>
 #include "sqlite3.h"
-#include "TextDatabase.h"
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-//#include <SDL2/SDL.h>
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
-//Xcode version of #include <SDL.h> is #include <SDL2/SDL.h>
-
-
+#include "TextDatabase.h"
 
 int main(int, char**) {
     // Text Database Code //
-    char *input="test.db";
+    std::string QueryResult;
+    char *input="TextDataBase.db";
     textdatabase databaseinfo(input);
-    databaseinfo.getQuote();
-
+    QueryResult=databaseinfo.Query();
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
@@ -30,7 +26,6 @@ int main(int, char**) {
 		std::cout << "SDL_ttf Error:" << TTF_GetError() << std::endl;
 		return 4;
 	}
-
     // Create main window
     SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
     if (main_window == nullptr){
@@ -59,15 +54,13 @@ int main(int, char**) {
 	Basic_Image test_image2(0, 100, main_renderer, main_window, "test.png");
 
 	SDL_Color text_color = { 255, 255, 255 };
-	Text test_text(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,"hello world!", 50);
-	
 
+    Text StringQuote(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 100);
 	int count = 0;
 
 	bool end_main_loop = false;
     // Main Loop
 	while (!end_main_loop){
-
 		// Event handling
 		while (SDL_PollEvent(&E) != 0){
 			switch (E.type){
@@ -83,35 +76,35 @@ int main(int, char**) {
 					test_image.setX(test_image.getX() - 15);
 					test_image2.setX(test_image2.getX() - 15);
 					clock_image.setX(clock_image.getX() - 15);
-					test_text.setX(test_text.getX() - 15);
+					StringQuote.setX(StringQuote.getX() - 15);
 					break;
 				// Right key pressed
 				case SDLK_RIGHT:
 					test_image.setX(test_image.getX() + 15);
 					test_image2.setX(test_image2.getX() + 15);
 					clock_image.setX(clock_image.getX() + 15);
-					test_text.setX(test_text.getX() + 15);
+					StringQuote.setX(StringQuote.getX() + 15);
 					break;
 				// Up key pressed
 				case SDLK_UP:
 					test_image.setY(test_image.getY() - 15);
 					test_image2.setY(test_image2.getY() - 15);
 					clock_image.setY(clock_image.getY() - 15);
-					test_text.setY(test_text.getY() - 15);
+					StringQuote.setY(StringQuote.getY() - 15);
 					break;
 				// Down key pressed
 				case SDLK_DOWN:
 					test_image.setY(test_image.getY() + 15);
 					test_image2.setY(test_image2.getY() + 15);
 					clock_image.setY(clock_image.getY() + 15);
-					test_text.setY(test_text.getY() + 15);
+					StringQuote.setY(StringQuote.getY() + 15);
 					break;
 				// show all hidden widgets
 				case SDLK_SPACE:
 					test_image.hidden = false;
 					test_image2.hidden = false;
 					clock_image.hidden = false;
-					test_text.hidden = false;
+				  StringQuote.hidden = false;
 					break;
 				}
 				break;
@@ -127,8 +120,8 @@ int main(int, char**) {
 						test_image2.toggleLock();
 					if (clock_image.insideBound(E.motion.x, E.motion.y))
 						clock_image.toggleLock();
-					if (test_text.insideBound(E.motion.x, E.motion.y))
-						test_text.toggleLock();
+					if (StringQuote.insideBound(E.motion.x, E.motion.y))
+						StringQuote.toggleLock();
 					break;
 				// Right mouse pressed
 				case SDL_BUTTON_RIGHT:
@@ -139,8 +132,8 @@ int main(int, char**) {
 						test_image2.toggleHidden();
 					if (clock_image.insideBound(E.motion.x, E.motion.y) && !clock_image.hidden)
 						clock_image.toggleHidden();
-					if (test_text.insideBound(E.motion.x, E.motion.y) && !test_text.hidden)
-						test_text.toggleHidden();
+					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !test_text.hidden)
+						StringQuote.toggleHidden();
 					break;
 				}
 				break;
@@ -155,11 +148,11 @@ int main(int, char**) {
 		test_image.draw();
 		test_image2.draw();
 		clock_image.draw();
-		test_text.draw();
+        StringQuote.draw();
+
 
 		//update screen
 		SDL_RenderPresent(main_renderer);
 	}
-
     return 0;
 }

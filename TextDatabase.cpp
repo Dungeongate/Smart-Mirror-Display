@@ -6,14 +6,13 @@
 //  Copyright © 2017 Scott English. All rights reserved.
 //
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
 #include <iostream>
+#include <string>
 #include "sqlite3.h"
 #include "TextDatabase.h"
 
-
+std::string answer;
+//Constructor initiates the connection to the database and assigns a pointer to the database file location
 textdatabase::textdatabase(const char *database){
     if ((sqlite3_open(database, &db))) {
         /*Print Statement for Console Debugging*/
@@ -27,33 +26,19 @@ textdatabase::textdatabase(const char *database){
 }
 textdatabase::~textdatabase(){
 }
-
+//Recieves the database after the SQL Statement and executes a query returning the information from the database from the second table within the database
 int textdatabase::callback(void *data, int argc, char **argv, char **azColName){
     int i;
     fprintf(stderr, "%s: ", (const char*)data);
     for (i = 0; i<argc; i++) {
-        printf("%s = %s\n",azColName[i], argv[i] ? argv[i] : "NULL");
+        answer=argv[i];
     }
     printf("\n");
     return 0;
 }
-void textdatabase::getstatement(char *statement){
-    sql=statement;
-    ErrMsg=0;
-    int rc;
-    rc = sqlite3_exec(db, sql, callback, 0, &ErrMsg);
-    if (rc != SQLITE_OK) {
-        /*Print Statement for Console Debugging*/
-        fprintf(stderr, "SQL error: %s\n", ErrMsg);
-        sqlite3_free(ErrMsg);
-    }
-    else {
-        /*Print Statement for Console Debugging*/
-        fprintf(stdout, "Records created successfully\n");
-    }
-}
-void textdatabase::getQuote(){
-    sql= "SELECT * from COMPANY";
+//Executest the SQL statement within the built in function of sqlite3.c and calls callback to receive the database information
+std::string textdatabase::Query(){
+    sql= "SELECT * from tbl2";
     ErrMsg=0;
     int rc;
     rc = sqlite3_exec(db, sql, callback, (void*)data, &ErrMsg);
@@ -67,4 +52,6 @@ void textdatabase::getQuote(){
         fprintf(stdout, "Records created successfully\n");
     }
     sqlite3_close(db);
+    quote=answer;
+    return quote;
 }

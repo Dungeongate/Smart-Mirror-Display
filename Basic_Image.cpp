@@ -51,7 +51,6 @@ void Basic_Image::draw()
 			SDL_RenderDrawRect(renderer, &pos);
 		}
 	}
-
 }
 
 // Changes the image to be drawn

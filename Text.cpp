@@ -59,8 +59,6 @@ void Text::draw()
 			SDL_RenderDrawRect(renderer, &pos);
 		}
 	}
-
-
 }
 
 // Changes the text string to be displayed

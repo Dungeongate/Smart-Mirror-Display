@@ -1,6 +1,7 @@
 #pragma once
 #include "Widget.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
 #include <string>
 
 class Basic_Image: public Widget
