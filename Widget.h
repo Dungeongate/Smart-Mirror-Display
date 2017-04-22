@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL2/SDL.h>
+#include <SDL.h>
 // Widgets are any drawable object that has an alterable position
 class Widget
 {
