@@ -132,7 +132,7 @@ int main(int, char**) {
 						test_image2.toggleHidden();
 					if (clock_image.insideBound(E.motion.x, E.motion.y) && !clock_image.hidden)
 						clock_image.toggleHidden();
-					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !test_text.hidden)
+					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !StringQuote.hidden)
 						StringQuote.toggleHidden();
 					break;
 				}
