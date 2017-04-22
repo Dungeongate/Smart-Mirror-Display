@@ -60,12 +60,14 @@ int main(int, char**) {
 
 	SDL_Color text_color = { 255, 255, 255 };
 	Text test_text(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,"hello world!", 50);
+	
 
 	int count = 0;
 
 	bool end_main_loop = false;
     // Main Loop
 	while (!end_main_loop){
+
 		// Event handling
 		while (SDL_PollEvent(&E) != 0){
 			switch (E.type){
@@ -104,12 +106,12 @@ int main(int, char**) {
 					clock_image.setY(clock_image.getY() + 15);
 					test_text.setY(test_text.getY() + 15);
 					break;
-				case SDLK_CAPSLOCK:
-					count++;
-					test_text.changeText(std::to_string(count));
-					break;
+				// show all hidden widgets
 				case SDLK_SPACE:
-					test_image.changeImage("clock_test.png");
+					test_image.hidden = false;
+					test_image2.hidden = false;
+					clock_image.hidden = false;
+					test_text.hidden = false;
 					break;
 				}
 				break;
@@ -118,10 +120,27 @@ int main(int, char**) {
 				switch (E.button.button){
 				// Left mouse pressed
 				case SDL_BUTTON_LEFT:
-					test_image.toggleLock(E.motion.x, E.motion.y);
-					test_image2.toggleLock(E.motion.x, E.motion.y);
-					clock_image.toggleLock(E.motion.x,E.motion.y);
-					test_text.toggleLock(E.motion.x, E.motion.y);
+					//toggle lock of a widget if the mouse is within the bound of the widget
+					if (test_image.insideBound(E.motion.x, E.motion.y))
+						test_image.toggleLock();
+					if (test_image2.insideBound(E.motion.x, E.motion.y))
+						test_image2.toggleLock();
+					if (clock_image.insideBound(E.motion.x, E.motion.y))
+						clock_image.toggleLock();
+					if (test_text.insideBound(E.motion.x, E.motion.y))
+						test_text.toggleLock();
+					break;
+				// Right mouse pressed
+				case SDL_BUTTON_RIGHT:
+					//hide a widget if mouse is within its bound and it isn't already hidden
+					if (test_image.insideBound(E.motion.x, E.motion.y) && !test_image.hidden)
+						test_image.toggleHidden();
+					if (test_image2.insideBound(E.motion.x, E.motion.y) && !test_image2.hidden)
+						test_image2.toggleHidden();
+					if (clock_image.insideBound(E.motion.x, E.motion.y) && !clock_image.hidden)
+						clock_image.toggleHidden();
+					if (test_text.insideBound(E.motion.x, E.motion.y) && !test_text.hidden)
+						test_text.toggleHidden();
 					break;
 				}
 				break;

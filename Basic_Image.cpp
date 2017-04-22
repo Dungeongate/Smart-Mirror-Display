@@ -43,8 +43,15 @@ Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_W
 // Draws the image widget
 void Basic_Image::draw()
 {
-	// Draw test bmp texture
-	SDL_RenderCopy(renderer, texture, NULL, &pos);
+	if (!hidden){
+		// Draw test bmp texture
+		SDL_RenderCopy(renderer, texture, NULL, &pos);
+		if (!locked){
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_RenderDrawRect(renderer, &pos);
+		}
+	}
+
 }
 
 // Changes the image to be drawn

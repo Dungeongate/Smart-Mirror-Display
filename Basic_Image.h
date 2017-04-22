@@ -13,5 +13,6 @@ public:
 private:
 	std::string image_location;
 	SDL_Texture* texture;
+	
 };
 
