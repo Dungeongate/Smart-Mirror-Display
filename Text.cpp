@@ -51,8 +51,16 @@ Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window,
 // Draws the image widget
 void Text::draw()
 {
-	// Draw test text texture
-	SDL_RenderCopy(renderer, texture, NULL, &pos);
+	if (!hidden){
+		// Draw test text texture
+		SDL_RenderCopy(renderer, texture, NULL, &pos);
+		if (!locked){
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_RenderDrawRect(renderer, &pos);
+		}
+	}
+
+
 }
 
 // Changes the text string to be displayed
