@@ -11,12 +11,14 @@ Widget::Widget(int start_x, int start_y, SDL_Renderer* renderer, SDL_Window* win
 	this->renderer = renderer;
 	this->window = window;
 	this->locked = true;
+
 	this->hidden = false;
 }
 
 // Set the X position of the Widget
 void Widget::setX(int x)
 {
+
 	if (!locked && !hidden){
 		pos.x = x;
 	}
@@ -25,7 +27,9 @@ void Widget::setX(int x)
 // Set the Y position of the Widget
 void Widget::setY(int y)
 {
+
 	if (!locked && !hidden){
+
 		pos.y = y;
 	}
 }
