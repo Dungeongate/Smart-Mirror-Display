@@ -64,7 +64,7 @@ int main(int, char**) {
 
 	bool end_main_loop = false;
     // Main Loop
-	while (!end_main_loop
+	while (!end_main_loop){
 		c.updateClock();
 		CLOCK.changeText(c.getTime());
 		// Event handling
