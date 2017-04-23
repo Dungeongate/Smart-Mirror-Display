@@ -14,7 +14,6 @@ Widget::Widget(int start_x, int start_y, SDL_Renderer* renderer, SDL_Window* win
 
 	this->hidden = false;
 }
-
 // Set the X position of the Widget
 void Widget::setX(int x)
 {
@@ -23,7 +22,6 @@ void Widget::setX(int x)
 		pos.x = x;
 	}
 }
-
 // Set the Y position of the Widget
 void Widget::setY(int y)
 {
@@ -33,33 +31,28 @@ void Widget::setY(int y)
 		pos.y = y;
 	}
 }
-
 // Set the X position of the Widget
 int Widget::getX()
 {
 	return pos.x;
 }
-
 // Set the Y position of the Widget
 int Widget::getY()
 {
 	return pos.y;
 }
-
 // If x and y are within boundaries of widget, toggle widget lock
 void Widget::toggleLock()
 {
 	locked = !locked;
 	return;
 }
-
 // If x and y are within boundaries of widget, toggle widget hidden
 void Widget::toggleHidden()
 {
 	hidden = !hidden;
 	return;
 }
-
 // Returns true only if x and y are within the rectangle bound of the widget
 bool Widget::insideBound(int x, int y)
 {
@@ -68,7 +61,6 @@ bool Widget::insideBound(int x, int y)
 	}
 	return false;
 }
-
 // Destructor for Widget
 Widget::~Widget()
 {

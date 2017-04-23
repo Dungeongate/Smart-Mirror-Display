@@ -7,10 +7,8 @@ using namespace std;
 // clock is string with the time in 24h format
 // wil be converted to 12 hr.
 
-
 class Clock
 {
-
 public:
 	Clock();
 	void updateClock();

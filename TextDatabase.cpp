@@ -23,54 +23,47 @@ textdatabase::textdatabase(const char *database){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         return;
     }
-    else {
-        /*Print Statement for Console Debugging*/
-        fprintf(stderr, "Opened database successfully\n");
-    }
 }
+//Text database destructor
 textdatabase::~textdatabase(){
 }
 //Recieves the database after the SQL Statement and executes a query returning the information from the database from the second table within the database
 int textdatabase::callback(void *data, int argc, char **argv, char **azColName){
-    fprintf(stderr, "%s: ", (const char*)data);
-    if(argc==1){
+    if(argc==1){ //Conditional for whether the row actually has information in it or not. 1 represents information present, 0 represents no information present within the row.
         answer=argv[0];
     }
-    printf("\n");
+    //If the row didn't have any information, we skip it.
     return 0;
 }
-//Executest the SQL statement within the built in function of sqlite3.c and calls callback to receive the database information
+//Executest the SQL statement within the built in function of sqlite3.c and calls callback to receive the database information in the designated row.
 std::string textdatabase::Query(){
     int randomnumber,rc;
     char *sqlstatement;
     std::string name,statement="select * from tbl2 LIMIT 1 OFFSET ";
+    
     /* initialize random seed: */
     srand (time(NULL));
     /* generate random number between 1 and number of rows in our database currently: */
     randomnumber = rand() % (count+1);
-    if(randomnumber==count){
+    if(randomnumber==count){ //Conditional that detects if were trying to ascess content outside of the rows that do contain content. If we have, then we pull the data from the last row.
         randomnumber -= 1;
     }
+    
+    //Append our random number to the SQL statement to access our data on the row specified by the random number.
     name = statement + std::to_string(randomnumber);
     sqlstatement=new char[name.length() + 1];
     std::strcpy(sqlstatement, name.c_str());
     std::cout<<sqlstatement;
     sql= sqlstatement;
     ErrMsg=0;
+    
+    //Execute the SQL statement and dump info to callback function to be printed to the screen.
     rc = sqlite3_exec(db, sql, callback, (void*)data, &ErrMsg);
-    if (rc != SQLITE_OK) {
-        /*Print Statement for Console Debugging*/
-        fprintf(stderr, "SQL error: %s\n", ErrMsg);
-        sqlite3_free(ErrMsg);
-    }
-    else {
-        /*Print Statement for Console Debugging*/
-        fprintf(stdout, "Records created successfully\n");
-    }
     sqlite3_close(db);
     quote=answer;
     return quote;
 }
+//CountRows counts how many rows present in our table that have actualy data in them.
 void textdatabase::CountRows(){
     int rc,n;
     sql= "SELECT COUNT(*) FROM tbl2";
