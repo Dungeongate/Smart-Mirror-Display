@@ -10,7 +10,12 @@ public:
 	void setY(int);
 	int getX();
 	int getY();
-	void toggleLock(int,int);
+
+	void toggleLock();
+	void toggleHidden();
+	bool insideBound(int, int);
+	bool hidden;
+
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;

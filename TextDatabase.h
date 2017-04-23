@@ -17,6 +17,7 @@
 
 typedef struct sqlite3 sqlite3;
 typedef struct sqlite3_stmt sqlite3_stmt;
+typedef struct Mem sqlite3_value;
 
 class textdatabase
 {
@@ -24,14 +25,16 @@ public:
     textdatabase(const char*);
     ~textdatabase();
     static int callback(void*, int, char**, char**);
-    void getstatement(char*);
-    void getQuote();
+    std::string Query();
+    void CountRows();
 protected:
     sqlite3 *db;
     char *ErrMsg;
     char *sql;
     const char *data= "Callback function called";
     char *values;
+    std::string quote;
+    int count;
 };
 
 

@@ -11,12 +11,15 @@ Widget::Widget(int start_x, int start_y, SDL_Renderer* renderer, SDL_Window* win
 	this->renderer = renderer;
 	this->window = window;
 	this->locked = true;
+
+	this->hidden = false;
 }
 
 // Set the X position of the Widget
 void Widget::setX(int x)
 {
-	if (!locked){
+
+	if (!locked && !hidden){
 		pos.x = x;
 	}
 }
@@ -24,7 +27,9 @@ void Widget::setX(int x)
 // Set the Y position of the Widget
 void Widget::setY(int y)
 {
-	if (!locked){
+
+	if (!locked && !hidden){
+
 		pos.y = y;
 	}
 }
@@ -42,12 +47,26 @@ int Widget::getY()
 }
 
 // If x and y are within boundaries of widget, toggle widget lock
-void Widget::toggleLock(int x, int y)
+void Widget::toggleLock()
+{
+	locked = !locked;
+	return;
+}
+
+// If x and y are within boundaries of widget, toggle widget hidden
+void Widget::toggleHidden()
+{
+	hidden = !hidden;
+	return;
+}
+
+// Returns true only if x and y are within the rectangle bound of the widget
+bool Widget::insideBound(int x, int y)
 {
 	if (x > pos.x && y > pos.y && x < pos.x + pos.w && y < pos.y + pos.h){
-		locked = !locked;
+		return true;
 	}
-	return;
+	return false;
 }
 
 // Destructor for Widget
