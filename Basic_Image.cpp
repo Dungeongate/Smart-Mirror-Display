@@ -1,7 +1,7 @@
 #include "Basic_Image.h"
 #include <string>
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 #include <iostream>
 
 // Standard Constructor
@@ -45,7 +45,6 @@ void Basic_Image::draw()
 			SDL_RenderDrawRect(renderer, &pos);
 		}
 	}
-
 }
 // Changes the image to be drawn
 void Basic_Image::changeImage(std::string new_image_location)

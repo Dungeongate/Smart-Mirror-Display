@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "sqlite3.h"
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
 #include "Clock.h"
 #include "Widget.h"
 #include "Basic_Image.h"
@@ -15,6 +15,13 @@ int main(int, char**) {
     std::string QueryResult;
     char *input="TextDataBase.db";
     textdatabase databaseinfo(input);
+
+	//Ininatal clock code
+	Clock c;
+	std::string TIME;
+	//std::cout << "CUREENT TIME" << c.getTime() <<"end line"<<endl;
+
+
     databaseinfo.CountRows();
     QueryResult=databaseinfo.Query();
 
@@ -27,6 +34,7 @@ int main(int, char**) {
         std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
         return 1;
     }
+
 	//Initialize SDL_ttf
 	if (TTF_Init() == -1)
 	{
@@ -62,7 +70,7 @@ int main(int, char**) {
 
 	bool end_main_loop = false;
     // Main Loop
-    while (!end_main_loop){
+	while (!end_main_loop
 		c.updateClock();
 		CLOCK.changeText(c.getTime());
 		// Event handling
@@ -84,11 +92,13 @@ int main(int, char**) {
 				case SDLK_RIGHT:
 					CLOCK.setX(CLOCK.getX() + 15);
 					StringQuote.setX(StringQuote.getX() + 15);
+
 					break;
 				// Up key pressed
 				case SDLK_UP:
 					CLOCK.setY(CLOCK.getY() - 15);
 					StringQuote.setY(StringQuote.getY() - 15);
+
 					break;
 				// Down key pressed
 				case SDLK_DOWN:
@@ -107,6 +117,7 @@ int main(int, char**) {
 				switch (E.button.button){
 				// Left mouse pressed
 				case SDL_BUTTON_LEFT:
+
 					//toggle lock of a widget if the mouse is within the bound of the widget
 					if (CLOCK.insideBound(E.motion.x, E.motion.y))
 						CLOCK.toggleLock();
@@ -132,8 +143,7 @@ int main(int, char**) {
 		SDL_RenderClear(main_renderer);
 
 		CLOCK.draw();
-        StringQuote.draw();
-
+    StringQuote.draw();
 		//update screen
 		SDL_RenderPresent(main_renderer);
 	}
