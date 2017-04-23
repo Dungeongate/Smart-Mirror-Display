@@ -15,13 +15,14 @@ int main(int, char**) {
     std::string QueryResult;
     char *input="TextDataBase.db";
     textdatabase databaseinfo(input);
+
+
     databaseinfo.CountRows();
     QueryResult=databaseinfo.Query();
 
-    //Ininatal clock code
-    Clock c;
-    std::string TIME;
-    //std::cout << "CUREENT TIME" << c.getTime() <<"end line"<<endl;
+	//Initial clock code
+	Clock c;
+	std::string TIME;
 
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -64,7 +65,7 @@ int main(int, char**) {
 
 	bool end_main_loop = false;
     // Main Loop
-	while (!end_main_loop
+	while (!end_main_loop){
 		c.updateClock();
 		CLOCK.changeText(c.getTime());
 		// Event handling
