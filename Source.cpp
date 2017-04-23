@@ -15,19 +15,13 @@ int main(int, char**) {
     std::string QueryResult;
     char *input="TextDataBase.db";
     textdatabase databaseinfo(input);
-
-	//Ininatal clock code
-	Clock c;
-	std::string TIME;
-	//std::cout << "CUREENT TIME" << c.getTime() <<"end line"<<endl;
-
-
     databaseinfo.CountRows();
     QueryResult=databaseinfo.Query();
 
-	//Initial clock code
-	Clock c;
-	std::string TIME;
+    //Ininatal clock code
+    Clock c;
+    std::string TIME;
+    //std::cout << "CUREENT TIME" << c.getTime() <<"end line"<<endl;
 
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
