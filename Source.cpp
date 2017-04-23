@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include "sqlite3.h"
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
+#include <SDL2_ttf/SDL_ttf.h>
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
@@ -14,6 +14,7 @@ int main(int, char**) {
     std::string QueryResult;
     char *input="TextDataBase.db";
     textdatabase databaseinfo(input);
+    databaseinfo.CountRows();
     QueryResult=databaseinfo.Query();
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -132,7 +133,7 @@ int main(int, char**) {
 						test_image2.toggleHidden();
 					if (clock_image.insideBound(E.motion.x, E.motion.y) && !clock_image.hidden)
 						clock_image.toggleHidden();
-					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !test_text.hidden)
+					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !StringQuote.hidden)
 						StringQuote.toggleHidden();
 					break;
 				}
