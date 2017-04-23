@@ -8,8 +8,12 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "sqlite3.h"
 #include "TextDatabase.h"
+#include <stdlib.h>
+#include <time.h>
+#include <cstring>
 
 std::string answer;
 //Constructor initiates the connection to the database and assigns a pointer to the database file location
@@ -28,19 +32,31 @@ textdatabase::~textdatabase(){
 }
 //Recieves the database after the SQL Statement and executes a query returning the information from the database from the second table within the database
 int textdatabase::callback(void *data, int argc, char **argv, char **azColName){
-    int i;
     fprintf(stderr, "%s: ", (const char*)data);
-    for (i = 0; i<argc; i++) {
-        answer=argv[i];
+    if(argc==1){
+        answer=argv[0];
     }
     printf("\n");
     return 0;
 }
 //Executest the SQL statement within the built in function of sqlite3.c and calls callback to receive the database information
 std::string textdatabase::Query(){
-    sql= "SELECT * from tbl2";
+    int randomnumber,rc;
+    char *sqlstatement;
+    std::string name,statement="select * from tbl2 LIMIT 1 OFFSET ";
+    /* initialize random seed: */
+    srand (time(NULL));
+    /* generate random number between 1 and number of rows in our database currently: */
+    randomnumber = rand() % (count+1);
+    if(randomnumber==count){
+        randomnumber -= 1;
+    }
+    name = statement + std::to_string(randomnumber);
+    sqlstatement=new char[name.length() + 1];
+    std::strcpy(sqlstatement, name.c_str());
+    std::cout<<sqlstatement;
+    sql= sqlstatement;
     ErrMsg=0;
-    int rc;
     rc = sqlite3_exec(db, sql, callback, (void*)data, &ErrMsg);
     if (rc != SQLITE_OK) {
         /*Print Statement for Console Debugging*/
@@ -54,4 +70,17 @@ std::string textdatabase::Query(){
     sqlite3_close(db);
     quote=answer;
     return quote;
+}
+void textdatabase::CountRows(){
+    int rc,n;
+    sql= "SELECT COUNT(*) FROM tbl2";
+    ErrMsg=0;
+    rc = sqlite3_exec(db, sql, callback, (void*)data, &ErrMsg);
+    std::stringstream stream(answer);
+    while(1) {
+        stream >> n;
+        if(!stream)
+            break;
+        count=n;
+    }
 }
