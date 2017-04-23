@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include "sqlite3.h"
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
