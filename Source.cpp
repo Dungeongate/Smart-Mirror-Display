@@ -5,6 +5,7 @@
 #include <SDL_ttf.h>
 #include "sqlite3.h"
 #include "Clock.h"
+#include "Weather\Weather.h"
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
