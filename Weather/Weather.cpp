@@ -1,7 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "WeatherWidget.h"
+#include "Weather.h"
 using namespace std;
 
 // Constructor
@@ -17,7 +18,7 @@ string Weather::getCurrentTemp() {
     return currentTemp;
 }
 
-Weather::updateWeather() {
+void Weather::updateWeather() {
     // Call update script (should be chmod +x)
     system("./Weather/Get_Weather.sh");
     // Open Weather.txt in read mode
@@ -32,7 +33,7 @@ Weather::updateWeather() {
     f.close();
 }
 
-Weather::changeLocation(string newLocation) {
+void Weather::changeLocation(string newLocation) {
     //TODO
 }
 
