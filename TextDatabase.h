@@ -26,15 +26,13 @@ public:
     ~textdatabase();
     static int callback(void*, int, char**, char**);
     std::string Query();
-    void CountRows();
 protected:
     sqlite3 *db;
     char *ErrMsg;
     char *sql;
-    const char *data= "Callback function called";
+    const char *data;
     char *values;
     std::string quote;
-    int count;
 };
 
 

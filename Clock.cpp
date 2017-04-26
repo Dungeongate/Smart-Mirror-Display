@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include <sstream>
 #include <iomanip>
-
+#pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 
 using namespace std;
 
