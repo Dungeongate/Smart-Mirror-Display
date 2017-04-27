@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <string>
 #include <SDL_ttf.h>
+
 class Text: public Widget
 {
 public:
@@ -10,6 +11,7 @@ public:
 	void draw();
 	void changeText(std::string);
 	void changeFont(std::string, int);
+	int getSize();
 	~Text();
 private:
 	std::string text;

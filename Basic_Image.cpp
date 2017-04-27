@@ -8,7 +8,6 @@
 Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string file_source) : Widget(start_x, start_y, renderer, window)
 {
 	image_location = file_source;
-
 	// Load the image to use
 	SDL_Surface *image_surface = IMG_Load(image_location.c_str());
 
@@ -20,10 +19,8 @@ Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_W
 		SDL_Quit();
 		return;
 	}
-
 	// Create texture from loaded image
 	texture = SDL_CreateTextureFromSurface(renderer, image_surface);
-
 	// We don't need the surface after texture creation
 	SDL_FreeSurface(image_surface);
 
@@ -34,12 +31,9 @@ Basic_Image::Basic_Image(int start_x, int start_y, SDL_Renderer *renderer, SDL_W
 		SDL_Quit();
 		return;
 	}
-
 	//Set information about texture
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
-
 }
-
 // Draws the image widget
 void Basic_Image::draw()
 {
@@ -52,12 +46,10 @@ void Basic_Image::draw()
 		}
 	}
 }
-
 // Changes the image to be drawn
 void Basic_Image::changeImage(std::string new_image_location)
 {
 	image_location = new_image_location;
-
 	// Load the image to use
 	SDL_Surface *image_surface = IMG_Load(image_location.c_str());
 
@@ -72,7 +64,6 @@ void Basic_Image::changeImage(std::string new_image_location)
 
 	// Create texture from loaded image
 	texture = SDL_CreateTextureFromSurface(renderer, image_surface);
-
 	// We don't need the surface after texture creation
 	SDL_FreeSurface(image_surface);
 
@@ -83,11 +74,9 @@ void Basic_Image::changeImage(std::string new_image_location)
 		SDL_Quit();
 		return;
 	}
-
 	//Set information about texture
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
 }
-
 // Destructor
 Basic_Image::~Basic_Image()
 {

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SDL_ttf.h>
 
+//Text constructor
 Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string font_name, SDL_Color color, std::string text_val, int pt_size) : Widget(start_x, start_y, renderer, window)
 {
 	this->text = text_val;
@@ -13,6 +14,7 @@ Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window,
 	// Create and store the font
 	font = TTF_OpenFont(font_name.c_str(), size);
 	// Make sure the font load was successful
+    
 	if (font == nullptr){
 		std::cout << "TTF_OpenFont Error: " << SDL_GetError() << std::endl;
 		return;
@@ -31,7 +33,6 @@ Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window,
 
 	// Create texture from loaded image
 	texture = SDL_CreateTextureFromSurface(renderer, text_surface);
-
 	// We don't need the surface after texture creation
 	SDL_FreeSurface(text_surface);
 
@@ -43,14 +44,14 @@ Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window,
 		SDL_Quit();
 		return;
 	}
-
 	//Set information about texture
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
 }
-
 // Draws the image widget
 void Text::draw()
 {
+
+
 	if (!hidden){
 		// Draw test text texture
 		SDL_RenderCopy(renderer, texture, NULL, &pos);
@@ -60,7 +61,6 @@ void Text::draw()
 		}
 	}
 }
-
 // Changes the text string to be displayed
 void Text::changeText(std::string new_text)
 {
@@ -93,7 +93,6 @@ void Text::changeText(std::string new_text)
 	//Set information about texture
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
 }
-
 // Changes the font to be displayed
 void Text::changeFont(std::string new_font, int new_size)
 {
@@ -135,7 +134,12 @@ void Text::changeFont(std::string new_font, int new_size)
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
 }
 
+// Returns the font point size of the text
+int Text::getSize(){
+	return this->size;
+}
 
+//Text destructor
 Text::~Text()
 {
 }

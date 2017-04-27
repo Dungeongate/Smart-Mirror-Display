@@ -10,14 +10,15 @@ public:
 	void setY(int);
 	int getX();
 	int getY();
+
 	void toggleLock();
 	void toggleHidden();
 	bool insideBound(int, int);
 	bool hidden;
+	bool locked;
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
 	SDL_Rect pos;
-	bool locked;
 };
 
