@@ -1,8 +1,8 @@
 #pragma once
 #include "Widget.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
-#include <SDL_ttf.h>
+#include <SDL2_ttf/SDL_ttf.h>
 
 class Text: public Widget
 {
@@ -11,6 +11,7 @@ public:
 	void draw();
 	void changeText(std::string);
 	void changeFont(std::string, int);
+    int getSize();
 	~Text();
 private:
 	std::string text;

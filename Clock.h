@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 #include <string>
 using namespace std;
@@ -15,6 +15,7 @@ public:
 	string getTime();
 	void convertHour(int);
 	~Clock();
+    int counter=0;
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
