@@ -53,13 +53,11 @@ std::string textdatabase::Query(){
     name = statement + std::to_string(randomnumber);
     sqlstatement=new char[name.length() + 1];
     std::strcpy(sqlstatement, name.c_str());
-    std::cout<<sqlstatement;
     sql= sqlstatement;
     ErrMsg=0;
     
     //Execute the SQL statement and dump info to callback function to be printed to the screen.
     rc = sqlite3_exec(db, sql, callback, (void*)data, &ErrMsg);
-    sqlite3_close(db);
     quote=answer;
     return quote;
 }

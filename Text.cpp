@@ -1,8 +1,8 @@
 #include "Text.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
-#include <SDL_ttf.h>
+#include <SDL2_ttf/SDL_ttf.h>
 
 //Text constructor
 Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string font_name, SDL_Color color, std::string text_val, int pt_size) : Widget(start_x, start_y, renderer, window)
@@ -132,6 +132,9 @@ void Text::changeFont(std::string new_font, int new_size)
 
 	//Set information about texture
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
+}
+int Text::getSize(){
+    return this->size;
 }
 //Text destructor
 Text::~Text()

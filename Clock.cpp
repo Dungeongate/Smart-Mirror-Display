@@ -2,7 +2,7 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <sstream>
 #include <iomanip>
 
@@ -158,8 +158,8 @@ void Clock::updateClock()
 		string smin = SSmin.str();
 		string ssec = SSsec.str();
 		TIME = to_string(hour) + " : " + smin + " : " + ssec + AMPM;
-
 	}
+
 }
 
 // returns the TIME string

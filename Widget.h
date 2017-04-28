@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL.h>
+#include <SDL2/SDL.h>
 // Widgets are any drawable object that has an alterable position
 class Widget
 {
@@ -15,11 +15,10 @@ public:
 	void toggleHidden();
 	bool insideBound(int, int);
 	bool hidden;
-
+    bool locked;
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
 	SDL_Rect pos;
-	bool locked;
 };
 
