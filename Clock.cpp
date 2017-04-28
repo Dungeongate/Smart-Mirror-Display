@@ -165,7 +165,6 @@ void Clock::updateClock()
 // returns the TIME string
 string Clock::getTime()
 {
-    counter++;
 	return TIME;
 }
 Clock::~Clock()
