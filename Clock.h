@@ -15,7 +15,6 @@ public:
 	string getTime();
 	void convertHour(int);
 	~Clock();
-    int counter=0;
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;
