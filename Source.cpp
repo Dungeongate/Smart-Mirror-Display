@@ -5,6 +5,7 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #include "sqlite3.h"
 #include "Clock.h"
+#include "Weather\Weather.h"
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
@@ -23,6 +24,9 @@ int main(int, char**) {
 	//Initial clock code
 	Clock c;
 	std::string TIME;
+
+    //Initialize Weather
+    Weather w;
 
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -93,6 +97,7 @@ int main(int, char**) {
 				case SDLK_LEFT:
 					CLOCK.setX(CLOCK.getX() - 15);
 					StringQuote.setX(StringQuote.getX() - 15);
+                    Weather.setX(Weather.getX() - 15);
 					break;
 				// Right key pressed
 				case SDLK_RIGHT:
@@ -108,11 +113,13 @@ int main(int, char**) {
 				case SDLK_DOWN:
 					CLOCK.setY(CLOCK.getY() + 15);
 					StringQuote.setY(StringQuote.getY() + 15);
+                    Weather.setY(Weather.getY() + 15);
 					break;
 				// show all hidden widgets
 				case SDLK_SPACE:
                     StringQuote.hidden = false;
                     CLOCK.hidden = false;
+                    Weather.hidden = false;
 					break;
 				}
 				break;
@@ -127,6 +134,8 @@ int main(int, char**) {
 						CLOCK.toggleLock();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y))
 						StringQuote.toggleLock();
+                    if (Weather.insideBound(E.motion.x, E.motion.y))
+                        Weather.toggleLock();
 					break;
 				// Right mouse pressed
 				case SDL_BUTTON_RIGHT:
@@ -135,6 +144,8 @@ int main(int, char**) {
 						CLOCK.toggleHidden();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !StringQuote.hidden)
 						StringQuote.toggleHidden();
+                    if (Weather.insideBound(E.motion.x, E.motion.y) && !Weather.hidden)
+    					Weather.toggleHidden();
 					break;
 				}
 			break;
@@ -146,6 +157,7 @@ int main(int, char**) {
                 if (!StringQuote.locked && !StringQuote.hidden)
                     StringQuote.changeFont("RAPSCALL.ttf", StringQuote.getSize() + E.wheel.y);
             break;
+
 			case SDL_QUIT:
 				end_main_loop = true;
 				break;
