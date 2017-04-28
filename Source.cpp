@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "sqlite3.h"
 #include "Clock.h"
 #include "Weather\Weather.h"
