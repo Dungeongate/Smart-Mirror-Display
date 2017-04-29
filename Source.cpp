@@ -65,7 +65,7 @@ int main(int, char**) {
 	SDL_Color text_color = { 255, 255, 255 };
 	Text CLOCK(300, 600, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getTime() , 150);
     Text StringQuote(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 100);
-    Text Weather(300, 600, main_renderer, main_window, "RAPSCALL.tff", \
+    Text weather(300, 600, main_renderer, main_window, "RAPSCALL.tff", \
         text_color, w.getCurrentTemp(), 100);
 	int count = 0;
 
@@ -75,7 +75,7 @@ int main(int, char**) {
 		c.updateClock();
 		CLOCK.changeText(c.getTime());
         w.updateWeather();
-        Weather.changeText(w.getCurrentTemp());
+        weather.changeText(w.getCurrentTemp());
 		// Event handling
 		while (SDL_PollEvent(&E) != 0){
 			switch (E.type){
@@ -90,31 +90,31 @@ int main(int, char**) {
 				case SDLK_LEFT:
 					CLOCK.setX(CLOCK.getX() - 15);
 					StringQuote.setX(StringQuote.getX() - 15);
-                    Weather.setX(Weather.getX() - 15);
+                    weather.setX(weather.getX() - 15);
 					break;
 				// Right key pressed
 				case SDLK_RIGHT:
 					CLOCK.setX(CLOCK.getX() + 15);
 					StringQuote.setX(StringQuote.getX() + 15);
-                    Weather.setX(Weather.getX() + 15);
+                    weather.setX(weather.getX() + 15);
 					break;
 				// Up key pressed
 				case SDLK_UP:
 					CLOCK.setY(CLOCK.getY() - 15);
 					StringQuote.setY(StringQuote.getY() - 15);
-                    Weather.setY(Weather.getY() - 15);
+                    weather.setY(weather.getY() - 15);
 					break;
 				// Down key pressed
 				case SDLK_DOWN:
 					CLOCK.setY(CLOCK.getY() + 15);
 					StringQuote.setY(StringQuote.getY() + 15);
-                    Weather.setY(Weather.getY() + 15);
+                    weather.setY(weather.getY() + 15);
 					break;
 				// show all hidden widgets
 				case SDLK_SPACE:
                     StringQuote.hidden = false;
                     CLOCK.hidden = false;
-                    Weather.hidden = false;
+                    weather.hidden = false;
 					break;
 				}
 				break;
@@ -129,8 +129,8 @@ int main(int, char**) {
 						CLOCK.toggleLock();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y))
 						StringQuote.toggleLock();
-                    if (Weather.insideBound(E.motion.x, E.motion.y))
-                        Weather.toggleLock();
+                    if (weather.insideBound(E.motion.x, E.motion.y))
+                        weather.toggleLock();
 					break;
 				// Right mouse pressed
 				case SDL_BUTTON_RIGHT:
@@ -139,8 +139,8 @@ int main(int, char**) {
 						CLOCK.toggleHidden();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !StringQuote.hidden)
 						StringQuote.toggleHidden();
-                    if (Weather.insideBound(E.motion.x, E.motion.y) && !Weather.hidden)
-    					Weather.toggleHidden();
+                    if (weather.insideBound(E.motion.x, E.motion.y) && !weather.hidden)
+    					weather.toggleHidden();
 					break;
 				}
 			break;
@@ -154,7 +154,7 @@ int main(int, char**) {
 
 	CLOCK.draw();
     StringQuote.draw();
-    Weather.draw();
+    weather.draw();
 	//update screen
 	SDL_RenderPresent(main_renderer);
 	}
