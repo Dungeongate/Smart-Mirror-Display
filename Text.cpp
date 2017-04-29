@@ -133,6 +133,9 @@ void Text::changeFont(std::string new_font, int new_size)
 	//Set information about texture
 	SDL_QueryTexture(texture, NULL, NULL, &pos.w, &pos.h);
 }
+int Text::getSize(){
+    return this->size;
+}
 //Text destructor
 Text::~Text()
 {

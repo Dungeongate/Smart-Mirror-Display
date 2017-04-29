@@ -158,8 +158,8 @@ void Clock::updateClock()
 		string smin = SSmin.str();
 		string ssec = SSsec.str();
 		TIME = to_string(hour) + " : " + smin + " : " + ssec + AMPM;
-
 	}
+
 }
 
 // returns the TIME string
