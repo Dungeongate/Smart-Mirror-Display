@@ -11,6 +11,7 @@ public:
 	void draw();
 	void changeText(std::string);
 	void changeFont(std::string, int);
+    int getSize();
 	~Text();
 private:
 	std::string text;

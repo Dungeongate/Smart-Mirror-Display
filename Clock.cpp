@@ -9,9 +9,11 @@
 
 using namespace std;
 
-int hour,minute,sec;
+int hour,minute,sec, month,day,year;
 string  TIME;
 string AMPM;
+string date;
+
 
 //Constructor for the clock class
 Clock::Clock() {
@@ -51,6 +53,14 @@ Clock::Clock() {
 	
 	// setting the string variable time to the value of the combined variables containing the hour, minute, sec and the AM/PM string
 	TIME = to_string(hour) + " : " + smin + " : " + ssec + AMPM;
+	//delete now;
+	//now  = NULL;
+	month = now->tm_mon+1;
+	day = now->tm_mday;
+	year = now->tm_year-100;
+
+	date = to_string(month) + "-" + to_string(day) + "-" + to_string(year);
+
 }
 
 // method for converting 24 hour clock to 12 hour clock
@@ -116,6 +126,9 @@ void Clock::updateClock()
 
 	// used for not doing redunant computations if the hour/minute/sec are already zero, do nothing;
 	if (hour == 0 || minute == 0 || sec == 0) {
+		//n = NULL;
+		//delete n;
+		//n = NULL;
 		return;
 	}
 
@@ -158,14 +171,19 @@ void Clock::updateClock()
 		string smin = SSmin.str();
 		string ssec = SSsec.str();
 		TIME = to_string(hour) + " : " + smin + " : " + ssec + AMPM;
-
 	}
+	//delete n;
+	//n = NULL;
 }
 
 // returns the TIME string
 string Clock::getTime()
 {
 	return TIME;
+}
+
+string Clock::getDate() {
+	return date;
 }
 Clock::~Clock()
 {
