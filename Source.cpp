@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 #include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "sqlite3.h"
 #include "Clock.h"
-#include "Weather\Weather.h"
+#include "Weather.h"
 #include "Widget.h"
 #include "Basic_Image.h"
 #include "Text.h"
@@ -14,7 +14,7 @@
 int main(int, char**) {
     // Text Database Code //
     std::string QueryResult;
-    char *input="TextDataBase.db";
+    const char *input="TextDataBase.db";
     textdatabase databaseinfo(input);
 
 
@@ -42,14 +42,16 @@ int main(int, char**) {
 	}
 
     // Create main window
-    SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 2500, 1300, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
+    SDL_Window *main_window = SDL_CreateWindow("GUI window test text", 100, 100, 1000, 900, SDL_WINDOW_SHOWN || SDL_WINDOW_RESIZABLE);
     if (main_window == nullptr){
         std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return 2;
     }
     int seconds_per_quote = 5;
+    int seconds_per_weather = 15;
     int seconds_since_last_quote = 0;
+    int seconds_since_last_weather = 0;
     std::string last_second = c.getTime();
 
     // Create renderer to draw to main window
@@ -66,76 +68,93 @@ int main(int, char**) {
     const Uint8 *key_state = SDL_GetKeyboardState(NULL);
     SDL_Event E;
 	SDL_Color text_color = { 255, 255, 255 };
-	Text CLOCK(1600, 1400, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getTime() , 150);
-    Text StringQuote(200, 800, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 100);
 
+	Text CLOCK(300, 600, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getTime() , 50);
+    Text StringQuote(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 50);
+    Text weather(200, 800, main_renderer, main_window, "RAPSCALL.ttf",text_color, w.getCurrentTemp(),50);
 	bool end_main_loop = false;
     // Main Loop
-	while (!end_main_loop){
-		c.updateClock();
+    while (!end_main_loop){
+	c.updateClock();
+    	if (c.getTime() != last_second){
+		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
+		SDL_RenderClear(main_renderer);
+		CLOCK.draw();
+        	StringQuote.draw();
+        	weather.draw();
+
+		//update screen
+		SDL_RenderPresent(main_renderer);
 		CLOCK.changeText(c.getTime());
-        if (c.getTime() != last_second){
-            last_second = c.getTime();
-            seconds_since_last_quote++;
-        }
-        if (seconds_since_last_quote >= seconds_per_quote){
-            // Get the new random quote into QueryResult
-            StringQuote.changeText(databaseinfo.Query());
-            seconds_since_last_quote = 0;
-        }
-		// Event handling
-		while (SDL_PollEvent(&E) != 0){
-			switch (E.type){
-			// User presses a key
-			case SDL_KEYDOWN:
-				switch (E.key.keysym.sym){
-				// Escape key pressed
-				case SDLK_ESCAPE:
-					end_main_loop = true;
-					break;
-				// Left key pressed
-				case SDLK_LEFT:
-					CLOCK.setX(CLOCK.getX() - 15);
-					StringQuote.setX(StringQuote.getX() - 15);
-                    Weather.setX(Weather.getX() - 15);
-					break;
-				// Right key pressed
-				case SDLK_RIGHT:
-					CLOCK.setX(CLOCK.getX() + 15);
-					StringQuote.setX(StringQuote.getX() + 15);
-					break;
-				// Up key pressed
-				case SDLK_UP:
-					CLOCK.setY(CLOCK.getY() - 15);
-					StringQuote.setY(StringQuote.getY() - 15);
-					break;
-				// Down key pressed
-				case SDLK_DOWN:
-					CLOCK.setY(CLOCK.getY() + 15);
-					StringQuote.setY(StringQuote.getY() + 15);
-                    Weather.setY(Weather.getY() + 15);
-					break;
-				// show all hidden widgets
-				case SDLK_SPACE:
-                    StringQuote.hidden = false;
-                    CLOCK.hidden = false;
-                    Weather.hidden = false;
-					break;
-				}
+        	last_second = c.getTime();
+        	seconds_since_last_quote++;
+		seconds_since_last_weather++;
+    	}
+    	if (seconds_since_last_quote >= seconds_per_quote){
+       		// Get the new random quote into QueryResult
+        	StringQuote.changeText(databaseinfo.Query());
+        	seconds_since_last_quote = 0;
+    	}
+	if (seconds_since_last_weather >= seconds_per_weather){
+		w.updateWeather();
+		weather.changeText(w.getCurrentTemp());
+		seconds_since_last_weather=0;
+	}
+
+	// Event handling
+	while (SDL_PollEvent(&E) != 0){
+		switch (E.type){
+		// User presses a key
+		case SDL_KEYDOWN:
+		switch (E.key.keysym.sym){
+		// Escape key pressed
+		case SDLK_ESCAPE:
+			end_main_loop = true;
+			break;
+			// Left key pressed
+			case SDLK_LEFT:
+				CLOCK.setX(CLOCK.getX() - 15);
+				StringQuote.setX(StringQuote.getX() - 15);
+                    		weather.setX(weather.getX() - 15);
 				break;
+			// Right key pressed
+				case SDLK_RIGHT:
+				CLOCK.setX(CLOCK.getX() + 15);
+				StringQuote.setX(StringQuote.getX() + 15);
+                    		weather.setX(weather.getX() + 15);
+				break;
+			// Up key pressed
+			case SDLK_UP:
+				CLOCK.setY(CLOCK.getY() - 15);
+				StringQuote.setY(StringQuote.getY() - 15);
+                    		weather.setY(weather.getY() - 15);
+				break;
+			// Down key pressed
+			case SDLK_DOWN:
+				CLOCK.setY(CLOCK.getY() + 15);
+				StringQuote.setY(StringQuote.getY() + 15);
+                    		weather.setY(weather.getY() + 15);
+				break;
+			// show all hidden widgets
+			case SDLK_SPACE:
+                    		StringQuote.hidden = false;
+                    		CLOCK.hidden = false;
+                    		weather.hidden = false;
+				break;
+			}
+			break;
 			// Mouse button pressed
 			case SDL_MOUSEBUTTONDOWN:
 				switch (E.button.button){
 				// Left mouse pressed
 				case SDL_BUTTON_LEFT:
-
 					//toggle lock of a widget if the mouse is within the bound of the widget
 					if (CLOCK.insideBound(E.motion.x, E.motion.y))
 						CLOCK.toggleLock();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y))
 						StringQuote.toggleLock();
-                    if (Weather.insideBound(E.motion.x, E.motion.y))
-                        Weather.toggleLock();
+                    			if (weather.insideBound(E.motion.x, E.motion.y))
+                        			weather.toggleLock();
 					break;
 				// Right mouse pressed
 				case SDL_BUTTON_RIGHT:
@@ -144,8 +163,8 @@ int main(int, char**) {
 						CLOCK.toggleHidden();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !StringQuote.hidden)
 						StringQuote.toggleHidden();
-                    if (Weather.insideBound(E.motion.x, E.motion.y) && !Weather.hidden)
-    					Weather.toggleHidden();
+                    			if (weather.insideBound(E.motion.x, E.motion.y) && !weather.hidden)
+    						weather.toggleHidden();
 					break;
 				}
 			break;
@@ -158,18 +177,12 @@ int main(int, char**) {
                     StringQuote.changeFont("RAPSCALL.ttf", StringQuote.getSize() + E.wheel.y);
             break;
 
-			case SDL_QUIT:
-				end_main_loop = true;
-				break;
-			}
-		}
-	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
-	SDL_RenderClear(main_renderer);
-
-	CLOCK.draw();
-    StringQuote.draw();
-	//update screen
-	SDL_RenderPresent(main_renderer);
+	    case SDL_QUIT:
+		end_main_loop = true;
+		break;
+            }
 	}
+	SDL_Delay(1);
+    }
     return 0;
 }

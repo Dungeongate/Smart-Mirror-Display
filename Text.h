@@ -2,7 +2,7 @@
 #include "Widget.h"
 #include <SDL2/SDL.h>
 #include <string>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 
 class Text: public Widget
 {

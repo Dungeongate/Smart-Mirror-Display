@@ -30,7 +30,7 @@ public:
 protected:
     sqlite3 *db;
     char *ErrMsg;
-    char *sql;
+    const char *sql;
     const char *data= "Callback function called";
     char *values;
     std::string quote;

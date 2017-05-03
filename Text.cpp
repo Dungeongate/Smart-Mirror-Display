@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <iostream>
-#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 
 //Text constructor
 Text::Text(int start_x, int start_y, SDL_Renderer *renderer, SDL_Window *window, std::string font_name, SDL_Color color, std::string text_val, int pt_size) : Widget(start_x, start_y, renderer, window)

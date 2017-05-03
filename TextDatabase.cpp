@@ -60,6 +60,7 @@ std::string textdatabase::Query(){
     rc = sqlite3_exec(db, sql, callback, (void*)data, &ErrMsg);
     quote=answer;
     return quote;
+    sqlite3_close(db);
 }
 //CountRows counts how many rows present in our table that have actualy data in them.
 void textdatabase::CountRows(){
