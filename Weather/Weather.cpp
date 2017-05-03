@@ -26,9 +26,9 @@ void Weather::updateWeather() {
 
     // Read file
     string updatedTemp;
-    e >> dummy;
+    f >> dummy;
     f >> updatedTemp;
-    updatedTemp.append(" °F");
+    updatedTemp.append(" F");
 
     currentTemp = updatedTemp;
     f.close();
