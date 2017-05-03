@@ -24,8 +24,9 @@ void Weather::updateWeather() {
     // Open Weather.txt in read mode
     ifstream f ("./Weather/Weather.txt");
 
-    // Read first line of file
+    // Read file
     string updatedTemp;
+    e >> dummy;
     f >> updatedTemp;
     updatedTemp.append(" °F");
 

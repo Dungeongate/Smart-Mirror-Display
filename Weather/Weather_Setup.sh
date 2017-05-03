@@ -12,18 +12,21 @@ if [[ $weatherCheck == "" ]]; then
   sudo apt-get install weather-util
 fi
 
+# Instead of being a good programmer and fixing this script, I'm leaving this
+# comment to tell you to run lines 25-29 to achieve the same effect. Cheers!
+
 # If version is less than 2.1, replace certain files
-version=`dpkg -s weather-util | egrep -o "Version: .{3}" | egrep -o ".{3}$"`
-bigVersion=${version:0:1}
-littleVersion=${version:2}
-if (( "$bigVersion" < "2" )) ||
-    (( ("$bigVersion" == "2") && ("$littleVersion" == "0") )); then
+#version=`dpkg -s weather-util | egrep -o "Version: .{3}" | egrep -o ".{3}$"`
+#bigVersion=${version:0:1}
+#littleVersion=${version:2}
+#if (( "$bigVersion" < "2" )) ||
+#    (( ("$bigVersion" == "2") && ("$littleVersion" == "0") )); then
   # Replace files containing deprecated links
-  cd /usr/share/weather-util
-  sudo rm -f stations.gz zones.gz airports.gz
-  sudo wget fungi.yuggoth.org/weather/src/weather/stations \
-  fungi.yuggoth.org/weather/src/weather/zones \
-  fungi.yuggoth.org/weather/src/weather/airports
-fi
+#  cd /usr/share/weather-util
+#  sudo rm -f stations.gz zones.gz airports.gz
+#  sudo wget fungi.yuggoth.org/weather/src/weather/stations \
+#  fungi.yuggoth.org/weather/src/weather/zones \
+#  fungi.yuggoth.org/weather/src/weather/airports
+#fi
 
 # TODO: Pray to your personal Higher Power that this script works
