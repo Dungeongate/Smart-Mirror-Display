@@ -26,7 +26,7 @@ int main(int, char**) {
 	std::string TIME;
 
     //Initialize Weather
-    //Weather w;
+    Weather w;
 
     // Initialize video only for now
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
@@ -66,26 +66,36 @@ int main(int, char**) {
     const Uint8 *key_state = SDL_GetKeyboardState(NULL);
     SDL_Event E;
 	SDL_Color text_color = { 255, 255, 255 };
-	Text CLOCK(200, 100, main_renderer, main_window, "Comfortaa_Regular.ttf", text_color, c.getTime() , 150);
-    Text StringQuote(200, 200, main_renderer, main_window, "Comfortaa_Regular.ttf", text_color,QueryResult, 100);
-	Text Date(200, 400, main_renderer, main_window, "Comfortaa_Regular.ttf", text_color, c.getDate(), 150);
+
+  // added date text widget - thomas 5-4-17
+  Text Date(200, 400, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getDate(), 150);
+	Text CLOCK(300, 600, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getTime() , 150);
+  Text StringQuote(200, 500, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 100);
+  // this had a weird / new line inbetween the font and text color moved it back to one line thomas 5-4-17
+  Text weather(300, 600, main_renderer, main_window, "RAPSCALL.tff", text_color, w.getCurrentTemp(), 100);
+	int count = 0;
 
 	bool end_main_loop = false;
     // Main Loop
+  // added basic movement and scaling for the date widget - thomas 5-4-17
 	while (!end_main_loop){
 		SDL_Delay(10);
 		c.updateClock();
 		CLOCK.changeText(c.getTime());
-		Date.changeText(c.getDate());
-        if (c.getTime() != last_second){
-            last_second = c.getTime();
-            seconds_since_last_quote++;
-        }
-        if (seconds_since_last_quote >= seconds_per_quote){
-            // Get the new random quote into QueryResult
-            StringQuote.changeText(databaseinfo.Query());
-            seconds_since_last_quote = 0;
-        }
+    // added this line to update the date for new days, will make an if to check for the zero hour so it doesnt do it all the time
+    Date.changeText(c.getDate());
+    if (c.getTime() != last_second){
+        last_second = c.getTime();
+        seconds_since_last_quote++;
+    }
+    if (seconds_since_last_quote >= seconds_per_quote){
+        // Get the new random quote into QueryResult
+        StringQuote.changeText(databaseinfo.Query());
+        seconds_since_last_quote = 0;
+    }
+    
+    w.updateWeather();
+    weather.changeText(w.getCurrentTemp());
 		// Event handling
 		while (SDL_PollEvent(&E) != 0){
 			switch (E.type){
@@ -100,25 +110,29 @@ int main(int, char**) {
 				case SDLK_LEFT:
 					CLOCK.setX(CLOCK.getX() - 15);
 					StringQuote.setX(StringQuote.getX() - 15);
-                    Date.setX(Date.getX() - 15);
+          Date.setX(Date.getX() - 15);
+          weather.setX(weather.getX() - 15);
 					break;
 				// Right key pressed
 				case SDLK_RIGHT:
 					CLOCK.setX(CLOCK.getX() + 15);
 					StringQuote.setX(StringQuote.getX() + 15);
 					Date.setX(Date.getX() + 15);
+          weather.setX(weather.getX() + 15);
 					break;
 				// Up key pressed
 				case SDLK_UP:
 					CLOCK.setY(CLOCK.getY() - 15);
 					StringQuote.setY(StringQuote.getY() - 15);
 					Date.setY(Date.getY() - 15);
+          weather.setY(weather.getY() - 15);
 					break;
 				// Down key pressed
 				case SDLK_DOWN:
 					CLOCK.setY(CLOCK.getY() + 15);
 					StringQuote.setY(StringQuote.getY() + 15);
-                    Date.setY(Date.getY() + 15);
+          Date.setY(Date.getY() + 15);
+          weather.setY(weather.getY() + 15);
 					break;
 				case SDLK_d:
 					if (!Date.locked) {
@@ -131,6 +145,7 @@ int main(int, char**) {
                     StringQuote.hidden = false;
                     CLOCK.hidden = false;
                     Date.hidden = false;
+                    weather.hidden = false;
 					break;
 				}
 				break;
@@ -145,8 +160,10 @@ int main(int, char**) {
 						CLOCK.toggleLock();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y))
 						StringQuote.toggleLock();
-                    if (Date.insideBound(E.motion.x, E.motion.y))
-                        Date.toggleLock();
+          if (Date.insideBound(E.motion.x, E.motion.y))
+            Date.toggleLock();
+          if (weather.insideBound(E.motion.x, E.motion.y))
+             weather.toggleLock();
 					break;
 				// Right mouse pressed
 				case SDL_BUTTON_RIGHT:
@@ -155,8 +172,10 @@ int main(int, char**) {
 						CLOCK.toggleHidden();
 					if (StringQuote.insideBound(E.motion.x, E.motion.y) && !StringQuote.hidden)
 						StringQuote.toggleHidden();
-                    if (Date.insideBound(E.motion.x, E.motion.y) && !Date.hidden)
+          if (Date.insideBound(E.motion.x, E.motion.y) && !Date.hidden)
     					Date.toggleHidden();
+          if (weather.insideBound(E.motion.x, E.motion.y) && !weather.hidden)
+    					weather.toggleHidden();
 					break;
 				}
 			break;
@@ -164,11 +183,11 @@ int main(int, char**) {
             case SDL_MOUSEWHEEL:
             // scale the unlocked, unhidden widgets
                 if (!CLOCK.locked && !CLOCK.hidden)
-                    CLOCK.changeFont("Comfortaa_Regular.ttf", CLOCK.getSize() + E.wheel.y);
+                    CLOCK.changeFont("RAPSCALL.ttf", CLOCK.getSize() + E.wheel.y);
                 if (!StringQuote.locked && !StringQuote.hidden)
                     StringQuote.changeFont("Comfortaa_Regular.ttf", StringQuote.getSize() + E.wheel.y);
-				if (!Date.locked && !Date.hidden)
-					Date.changeFont("Comfortaa_Regular.ttf", Date.getSize() + E.wheel.y);
+				        if (!Date.locked && !Date.hidden)
+					          Date.changeFont("Comfortaa_Regular.ttf", Date.getSize() + E.wheel.y);
             break;
 
 			case SDL_QUIT:
@@ -179,9 +198,11 @@ int main(int, char**) {
 	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(main_renderer);
 
+  Date.draw();
 	CLOCK.draw();
-    StringQuote.draw();
-	Date.draw();
+  StringQuote.draw();
+  weather.draw();
+    
 	//update screen
 	SDL_RenderPresent(main_renderer);
 	}
