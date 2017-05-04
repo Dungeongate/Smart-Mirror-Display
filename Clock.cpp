@@ -10,11 +10,11 @@
 using namespace std;
 
 int hour,minute,sec, month,day,year;
-string  TIME;
+string TIME;
 string AMPM;
 string date;
 
-
+int datecheck = 1;
 //Constructor for the clock class
 Clock::Clock() {
 
@@ -55,10 +55,13 @@ Clock::Clock() {
 	TIME = to_string(hour) + " : " + smin + " : " + ssec + AMPM;
 	//delete now;
 	//now  = NULL;
+
+	// sets the values of the date
 	month = now->tm_mon+1;
 	day = now->tm_mday;
-	year = now->tm_year-100;
+	year = now->tm_year - 100;
 
+	// assign the values to the date string
 	date = to_string(month) + "-" + to_string(day) + "-" + to_string(year);
 
 }
@@ -148,6 +151,16 @@ void Clock::updateClock()
 
 		// set string TIME to the values of hour, min, and sec in HH:MM:SS AM/PM format
 		TIME = to_string(hour) + " : " + smin + " : " + ssec + AMPM;
+
+		// since hour is 0, we entered a new day
+		month = n->tm_mon + 1;
+		day = n->tm_mday;
+		year = n->tm_year - 100;
+
+		// assign the values to the date string
+		date = to_string(month) + "-" + to_string(day) + "-" + to_string(year);
+
+
 	}
 
 	// case to check for minute 59 going to 0 for a new minute
@@ -182,9 +195,81 @@ string Clock::getTime()
 	return TIME;
 }
 
+//returns the Date string
 string Clock::getDate() {
 	return date;
 }
+
+void Clock::changeDate() {
+
+	string m,d;
+	int y;
+	if( datecheck == 1){
+		switch (month) {
+		case 1:
+			m = "January";
+			break;
+		case 2: 
+			m = "Feburary";
+			break;
+		case 3:
+			m = "March";
+			break;
+		case 4:
+			m = "April";
+			break;
+		case 5:
+			m = "May";
+			break;
+		case 6:
+			m = "June";
+			break;
+		case 7:
+			m = "July";
+			break;
+		case 8:
+			m = "August";
+			break;
+		case 9:
+			m = "September";
+			break;
+		case 10:
+			m = "October";
+			break;
+		case 11:
+			m = "November";
+			break;
+		case 12:
+			m = "December";
+			break;
+		}
+
+		switch (day) {
+		case 1:
+			d = "1st";
+			break;
+		case 2 :
+			d = "2nd";
+		case 3:
+			d = "3rd";
+			break;
+		default:
+			d = to_string(day) + "th";
+			break;
+		}
+		y = year + 2000;
+		date = m + " " + d + ", " + to_string(y); 
+		datecheck = 0;
+
+	}
+	else if (datecheck == 0){
+		// assign the values to the date string
+		date = to_string(month) + "-" + to_string(day) + "-" + to_string(year);
+		datecheck = 1;
+	}
+}
+
+
 Clock::~Clock()
 {
 }

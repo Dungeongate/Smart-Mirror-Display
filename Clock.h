@@ -16,6 +16,7 @@ public:
 	void convertHour(int);
 	~Clock();
 	string getDate();
+	void changeDate();
 protected:
 	SDL_Renderer* renderer;
 	SDL_Window* window;

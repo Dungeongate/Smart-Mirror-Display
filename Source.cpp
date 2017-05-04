@@ -66,15 +66,17 @@ int main(int, char**) {
     const Uint8 *key_state = SDL_GetKeyboardState(NULL);
     SDL_Event E;
 	SDL_Color text_color = { 255, 255, 255 };
-	Text CLOCK(200, 100, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getTime() , 150);
-    Text StringQuote(200, 200, main_renderer, main_window, "RAPSCALL.ttf", text_color,QueryResult, 100);
-	Text Date(200, 400, main_renderer, main_window, "RAPSCALL.ttf", text_color, c.getDate(), 150);
+	Text CLOCK(200, 100, main_renderer, main_window, "Comfortaa_Regular.ttf", text_color, c.getTime() , 150);
+    Text StringQuote(200, 200, main_renderer, main_window, "Comfortaa_Regular.ttf", text_color,QueryResult, 100);
+	Text Date(200, 400, main_renderer, main_window, "Comfortaa_Regular.ttf", text_color, c.getDate(), 150);
 
 	bool end_main_loop = false;
     // Main Loop
 	while (!end_main_loop){
+		SDL_Delay(10);
 		c.updateClock();
 		CLOCK.changeText(c.getTime());
+		Date.changeText(c.getDate());
         if (c.getTime() != last_second){
             last_second = c.getTime();
             seconds_since_last_quote++;
@@ -118,6 +120,12 @@ int main(int, char**) {
 					StringQuote.setY(StringQuote.getY() + 15);
                     Date.setY(Date.getY() + 15);
 					break;
+				case SDLK_d:
+					if (!Date.locked) {
+						c.changeDate();
+						Date.changeText(c.getDate());
+						break;
+					}
 				// show all hidden widgets
 				case SDLK_SPACE:
                     StringQuote.hidden = false;
@@ -156,11 +164,11 @@ int main(int, char**) {
             case SDL_MOUSEWHEEL:
             // scale the unlocked, unhidden widgets
                 if (!CLOCK.locked && !CLOCK.hidden)
-                    CLOCK.changeFont("RAPSCALL.ttf", CLOCK.getSize() + E.wheel.y);
+                    CLOCK.changeFont("Comfortaa_Regular.ttf", CLOCK.getSize() + E.wheel.y);
                 if (!StringQuote.locked && !StringQuote.hidden)
-                    StringQuote.changeFont("RAPSCALL.ttf", StringQuote.getSize() + E.wheel.y);
+                    StringQuote.changeFont("Comfortaa_Regular.ttf", StringQuote.getSize() + E.wheel.y);
 				if (!Date.locked && !Date.hidden)
-					Date.changeFont("RAPSCALL.ttf", Date.getSize() + E.wheel.y);
+					Date.changeFont("Comfortaa_Regular.ttf", Date.getSize() + E.wheel.y);
             break;
 
 			case SDL_QUIT:
