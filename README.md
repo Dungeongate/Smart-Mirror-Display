@@ -1,7 +1,7 @@
 # Smart-Mirror-Display
-# Dedicated Contributors: Scott English, Teegan Duong, Thomas Sanchez, Ryan Faulkenberry
+# Dedicated Contributors: Scott English, Teegan Duong, Thomas Sanchez, Ryan Faulkenberry, John English
 # Start of Project: 02/20/17
-# 
+# Finished Software Basic Requirements: 05/04/17
 #
 # This software is intended to work with the operating system Rasbian on the Raspberry Pi Computer 2|3
 # The primary function of this software is to generate a customizable user interface involved with the DIY project commonly known as the "Raspberry Pi Smart Mirror Display
